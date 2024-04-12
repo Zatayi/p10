@@ -1,4 +1,4 @@
- import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useData } from "../../contexts/DataContext";
 import { getMonth } from "../../helpers/Date";
 
@@ -8,7 +8,7 @@ const Slider = () => {
   const { data } = useData();
   const [index, setIndex] = useState(0);
   const byDateDesc = data?.focus.sort((evtA, evtB) =>
-    new Date(evtB.date) < new Date(evtA.date) ? 1 : -1 /* inversement de evtB et evtA pour le défilement des slides */
+    new Date(evtB.date) > new Date(evtA.date) ? 1 : -1 /* inversement de evtB et evtA pour le défilement des slides */
   );
   const nextCard = () => {
     /* setTimeout(
@@ -19,25 +19,23 @@ const Slider = () => {
   useEffect(() => {
     nextCard();
   }); */
-  if (byDateDesc !== undefined) {
-    setTimeout(
-      () => setIndex(index < byDateDesc.length - 1 ? index + 1 : 0),
-      5000
-    );
-  }
-};
-useEffect(() => {
-  nextCard();
-});
+    if (byDateDesc !== undefined) {
+      setTimeout(
+        () => setIndex(index < byDateDesc.length - 1 ? index + 1 : 0),
+        5000
+      );
+    }
+  };
+  useEffect(() => {
+    nextCard();
+  });
   return (
     <div className="SlideCardList">
       {byDateDesc?.map((event, idx) => (
-        <>
+        <div key={event.title}>
           <div
-            key={event.title}
-            className={`SlideCard SlideCard--${
-              index === idx ? "display" : "hide"
-            }`}
+            className={`SlideCard SlideCard--${index === idx ? "display" : "hide"
+              }`}
           >
             <img src={event.cover} alt="forum" />
             <div className="SlideCard__descriptionContainer">
@@ -52,15 +50,17 @@ useEffect(() => {
             <div className="SlideCard__pagination">
               {byDateDesc.map((_, radioIdx) => (
                 <input
-                  key={`${event.id}`}
+                  // eslint-disable-next-line react/no-array-index-key
+                  key={`slider-${radioIdx}`}
                   type="radio"
                   name="radio-button"
                   checked={index === radioIdx} /* utilisation de index au lieu de Idx */
+                  readOnly
                 />
               ))}
             </div>
           </div>
-        </>
+        </div>
       ))}
     </div>
   );

@@ -14,11 +14,8 @@ import { useData } from "../../contexts/DataContext";
 
 /* const Page = () => {
   const {last} = useData() */
-  const Page = () => {
-    const { data } = useData();
-    const last = data && data.events && data.events.length > 0
-        ? data.events[data.events.length - 1]
-        : null;
+const Page = () => {
+  const { last } = useData();
 
   return <>
     <header>
@@ -28,7 +25,7 @@ import { useData } from "../../contexts/DataContext";
       <section className="SliderContainer">
         <Slider />
       </section>
-      <section className="ServicesContainer">
+      <section className="ServicesContainer"id="nos-services">
         <h2 className="Title">Nos services</h2>
         <p>Nous organisons des événements sur mesure partout dans le monde</p>
         <div className="ListContainer">
@@ -57,11 +54,11 @@ import { useData } from "../../contexts/DataContext";
           </ServiceCard>
         </div>
       </section>
-      <section className="EventsContainer">
+      <section className="EventsContainer"id="nos-realisations">
         <h2 className="Title">Nos réalisations</h2>
         <EventList />
       </section>
-      <section className="PeoplesContainer">
+      <section className="PeoplesContainer"id="notre-equipe">
         <h2 className="Title">Notre équipe</h2>
         <p>Une équipe d’experts dédiés à l’ogranisation de vos événements</p>
         <div className="ListContainer">
@@ -122,17 +119,17 @@ import { useData } from "../../contexts/DataContext";
     <footer className="row">
       <div className="col presta">
         <h3>Notre dernière prestation</h3>
-            {last && (
-             <EventCard
-              data-testid="last-event-card"
-              imageSrc={last?.cover}
-              imageAlt={last?.description}
-              title={last?.title}
-              date={new Date(last?.date)}
-              small
-              label={last?.type}
-            />   
-          )}  
+        {last && (
+          <EventCard
+            data-testid="last-event-card"
+            imageSrc={last?.cover}
+            imageAlt={last?.description}
+            title={last?.title}
+            date={new Date(last?.date)}
+            small
+            label={last?.type}
+          />
+        )}
       </div>
       <div className="col contact">
         <h3>Contactez-nous</h3>
